@@ -12,6 +12,7 @@ Usage:
 Supports reading from clipboard and multi-line paste.
 """
 
+import argparse
 import re
 import sys
 
@@ -195,7 +196,27 @@ def read_multiline(prompt: str) -> str:
     return "\n".join(lines)
 
 
+
 def main():
+    parser = argparse.ArgumentParser(
+        description="Replace ? placeholders in MyBatis/JDBC debug log SQL with actual parameter values.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Interactive usage:\n"
+            "  1. Run the script\n"
+            "  2. Paste the 'Preparing:' log line (and optionally the 'Parameters:' line)\n"
+            "  3. Press Enter twice to submit\n"
+            "  4. Get the fully resolved, formatted SQL\n"
+            "  5. Type 'quit' or 'q' to exit\n"
+        ),
+    )
+    parser.add_argument(
+        "--no-format", action="store_true",
+        help="Disable SQL pretty-formatting (output single-line SQL)",
+    )
+    args = parser.parse_args()
+    pretty = not args.no_format
+
     print("=" * 70)
     print("  SQL Parser — Replace ? placeholders with parameter values")
     print("=" * 70)
@@ -239,7 +260,7 @@ def main():
                 parameters_line = "Parameters: "
 
         try:
-            result = parse_and_replace(preparing_line, parameters_line)
+            result = parse_and_replace(preparing_line, parameters_line, pretty=pretty)
             print("\n" + "=" * 70)
             print("  RESOLVED SQL")
             print("=" * 70)
