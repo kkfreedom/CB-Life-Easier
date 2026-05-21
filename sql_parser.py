@@ -17,12 +17,18 @@ import re
 import sys
 
 
+def _strip_trailing_metadata(text: str) -> str:
+    """Remove the trailing log metadata like '[c-http-26] [341] {Req#=...}' from a log line."""
+    # Match trailing segments of [bracketed text] and {braced text} at end of line
+    return re.sub(r'\s+\[\S+\](?:\s+\[\S+\])*(?:\s+\{[^}]*\})?\s*$', '', text).strip()
+
+
 def extract_sql(preparing_line: str) -> str:
     """Extract the raw SQL from a 'Preparing:' log line."""
-    match = re.search(r"Preparing:\s*(.+?)(?:\s*\[.*\].*)?$", preparing_line)
+    match = re.search(r"Preparing:\s*(.+)$", preparing_line)
     if not match:
         raise ValueError("Could not find 'Preparing:' section in the input line.")
-    return match.group(1).strip()
+    return _strip_trailing_metadata(match.group(1))
 
 
 def extract_parameters(parameters_line: str) -> list[tuple[str, str]]:
@@ -31,11 +37,11 @@ def extract_parameters(parameters_line: str) -> list[tuple[str, str]]:
     Returns a list of (value, type) tuples.
     e.g. "3(Integer), hello(String)" -> [("3", "Integer"), ("hello", "String")]
     """
-    match = re.search(r"Parameters:\s*(.+?)(?:\s*\[.*\].*)?$", parameters_line)
+    match = re.search(r"Parameters:\s*(.+)$", parameters_line)
     if not match:
         return []
 
-    params_str = match.group(1).strip()
+    params_str = _strip_trailing_metadata(match.group(1))
     if not params_str:
         return []
 
