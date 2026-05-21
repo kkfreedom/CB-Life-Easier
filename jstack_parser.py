@@ -7,9 +7,9 @@ preceded by a timestamp line), structures the data, and prints a summary
 sorted by CPU time in descending order, grouped by dump timestamp.
 
 Usage:
-    python jstack-parser.py <jstack_file>
-    python jstack-parser.py <jstack_file> --top 20
-    python jstack-parser.py <jstack_file> --state RUNNABLE
+    python jstack_parser.py <jstack_file>
+    python jstack_parser.py <jstack_file> --top 20
+    python jstack_parser.py <jstack_file> --state RUNNABLE
 """
 
 import re

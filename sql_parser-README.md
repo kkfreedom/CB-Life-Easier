@@ -1,11 +1,11 @@
-# SQL Parser
+# sql_parser — SQL Log Resolver
 
 Resolves MyBatis / JDBC debug log output into executable SQL by replacing `?` placeholders with actual parameter values. The output is pretty-formatted with proper indentation.
 
 ## Quick Start
 
 ```bash
-python SQL-parser.py
+python sql_parser.py
 ```
 
 Paste your log lines when prompted, press **Enter twice** to submit, and get the resolved SQL.
@@ -85,7 +85,7 @@ ORDER BY u.name
 You can import the functions directly:
 
 ```python
-from SQL-parser import parse_and_replace, format_sql
+from sql_parser import parse_and_replace, format_sql
 
 # From log lines
 preparing = "==>  Preparing: SELECT * FROM users WHERE id = ?"

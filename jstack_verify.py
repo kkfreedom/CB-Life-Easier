@@ -3,10 +3,8 @@ import re
 import sys
 import argparse
 sys.path.insert(0, ".")
-from importlib import import_module
 
-# Import the parser
-jp = import_module("jstack-parser")
+import jstack_parser as jp
 
 parser = argparse.ArgumentParser(description="Verify no threads are missed by jstack-parser.")
 parser.add_argument("file", nargs="?", default=None, help="Path to the jstack output file")
@@ -14,7 +12,7 @@ args = parser.parse_args()
 
 filepath = args.file
 if not filepath:
-    print("Usage: python verify_threads.py <jstack_file>", file=sys.stderr)
+    print("Usage: python jstack_verify.py <jstack_file>", file=sys.stderr)
     sys.exit(1)
 
 # --- Count raw thread headers in the file ---

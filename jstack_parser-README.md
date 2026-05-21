@@ -5,7 +5,7 @@ Parses `jstack` output files containing one or more thread dumps, structures the
 ## Quick Start
 
 ```bash
-python jstack-parser.py <jstack_file>
+python jstack_parser.py <jstack_file>
 ```
 
 ## CLI Options
@@ -21,16 +21,16 @@ python jstack-parser.py <jstack_file>
 
 ```bash
 # Full report, all threads
-python jstack-parser.py dump.txt
+python jstack_parser.py dump.txt
 
 # Top 20 threads by CPU
-python jstack-parser.py dump.txt --top 20
+python jstack_parser.py dump.txt --top 20
 
 # Only RUNNABLE threads
-python jstack-parser.py dump.txt --state RUNNABLE
+python jstack_parser.py dump.txt --state RUNNABLE
 
 # Top 10 RUNNABLE threads, saved to file
-python jstack-parser.py dump.txt --top 10 --state RUNNABLE -o results.txt
+python jstack_parser.py dump.txt --top 10 --state RUNNABLE -o results.txt
 ```
 
 ## Input Format
